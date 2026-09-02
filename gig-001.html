@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>LL57 | Gig 001</title>
+
+  <meta
+    name="description"
+    content="LL57 Gig 001 — secret location, live music, tickets and event information."
+  />
+
+  <!-- LEAFLET MAP -->
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+  <style>
+    :root {
+      --orange: #e6401f;
+      --cream: #fff8f2;
+      --dark: #171717;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: var(--orange);
+      color: var(--cream);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      padding: 2rem;
+      isolation: isolate;
+    }
+
+    /* BACKGROUND SHAPES */
+
+    .shape {
+      position: fixed;
+      z-index: -1;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+      filter: blur(1px);
+    }
+
+    .shape-one {
+      width: 360px;
+      height: 360px;
+      top: -160px;
+      left: -120px;
+      border-radius:
+        42% 58% 67% 33% /
+        35% 47% 53% 65%;
+      animation: float-one 10s ease-in-out infinite alternate;
+    }
+
+    .shape-two {
+      width: 500px;
+      height: 500px;
+      right: -220px;
+      bottom: -240px;
+      border-radius:
+        61% 39% 34% 66% /
+        48% 62% 38% 52%;
+      animation: float-two 13s ease-in-out infinite alternate;
+    }
+
+    /* HEADER */
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      width: 160px;
+      height: 160px;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255, 255, 255, 0.65);
+      border-radius: 50%;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 120%;
+      height: 120%;
+      object-fit: contain;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .social-links a {
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3rem;
+    }
+
+    /* GIG */
+
+.gig-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  align-items: center;
+  gap: clamp(2.5rem, 7vw, 7rem);
+
+  width: min(100%, 1100px);
+  margin: 4rem auto 7rem;
+}
+
+.gig-poster {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gig-info {
+  text-align: left;
+}
+
+.gig-label {
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.gig-info h1 {
+  margin: 0 0 1rem;
+
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.gig-date {
+  margin: 0 0 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.gig-description {
+  max-width: 450px;
+  margin: 0 0 1rem;
+
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.gig-description.english {
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.ticket-button {
+  display: inline-block;
+  padding: 1rem 1.8rem;
+
+  border: 2px solid var(--cream);
+  border-radius: 999px;
+
+  background: var(--cream);
+  color: var(--orange);
+
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.ticket-button:hover {
+  transform: translateY(-3px);
+  background: transparent;
+  color: var(--cream);
+}
+
+.gig-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.where-button {
+  display: inline-block;
+  padding: 1.2rem 2.2rem;
+
+  border: 2px solid var(--cream);
+  border-radius: 999px;
+
+  background: var(--cream);
+  color: var(--orange);
+
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.where-button:hover {
+  transform: translateY(-3px);
+  background: transparent;
+  color: var(--cream);
+}
+
+    /* MAP */
+
+    .where-section {
+      width: min(100%, 1100px);
+      margin: 0 auto 7rem;
+    }
+
+    .where-heading {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .where-heading h2 {
+      margin: 0;
+      font-size: clamp(3rem, 9vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+
+    .where-heading p {
+      margin: 1rem auto 0;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    .map-frame {
+      overflow: hidden;
+      border: 2px solid var(--cream);
+      border-radius: 1.5rem;
+      background: var(--cream);
+    }
+
+    #map {
+      width: 100%;
+      height: 600px;
+      background: #ddd;
+    }
+
+    .leaflet-control-attribution {
+      font-size: 9px !important;
+    }
+
+    /* Make the map quieter / less detailed visually */
+#map .leaflet-tile-pane {
+  filter:
+    grayscale(100%)
+    contrast(75%)
+    brightness(115%)
+    opacity(65%);
+}
+
+/* Keep our orange shape full colour */
+#map .leaflet-overlay-pane {
+  filter: none;
+}
+
+    .map-status {
+  margin-top: 1rem;
+  overflow: hidden;
+
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 1.5rem;
+
+  background: rgba(255,255,255,0.08);
+  text-align: center;
+}
+
+    .status-block {
+      padding: 2rem;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .status-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .status-value {
+      display: block;
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .map-explanation {
+  max-width: 650px;
+  margin: 3rem auto 0;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.map-explanation p {
+  margin: 0 0 1.2rem;
+}
+
+.map-final-line {
+  margin-top: 2rem !important;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+    /* MAILING LIST */
+
+    .mailing-section {
+      width: min(100%, 900px);
+      margin: 0 auto 7rem;
+      text-align: center;
+    }
+
+    .mailing-section > h2 {
+      margin: 0 0 2rem;
+      font-size: clamp(3rem, 7vw, 5rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+
+    .signup {
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 1.5rem;
+      background: rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(8px);
+    }
+
+    .signup h3 {
+      margin: 0 0 0.75rem;
+      font-size: 1.8rem;
+      letter-spacing: -0.04em;
+    }
+
+    .signup p {
+      margin: 0 0 1.5rem;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 0.8rem;
+    }
+
+    label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+
+    input {
+      width: 100%;
+      padding: 1rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 999px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    input:focus {
+      border-color: white;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .submit-button {
+      width: 100%;
+      margin-top: 0.3rem;
+      padding: 1rem 1.25rem;
+      border: 0;
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--dark);
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      background: white;
+    }
+
+    .privacy-note {
+      margin-top: 1rem !important;
+      margin-bottom: 0 !important;
+      font-size: 0.75rem;
+      opacity: 0.75;
+    }
+
+    /* FOOTER */
+
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes float-one {
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(90px, 70px);
+      }
+    }
+
+    @keyframes float-two {
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(-80px, -50px);
+      }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+      .page {
+        padding: 1.25rem;
+      }
+
+      .logo {
+        width: 88px;
+        height: 88px;
+      }
+
+      .social-links {
+        gap: 0.8rem;
+        font-size: 0.7rem;
+      }
+
+      .gig-hero {
+        margin-top: 2rem;
+      }
+
+      #map {
+        height: 470px;
+      }
+
+      .map-status {
+        grid-template-columns: 1fr;
+      }
+
+      .bottom-bar {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .social-links {
+        max-width: 210px;
+      }
+
+      #map {
+        height: 400px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <div class="shape shape-one"></div>
+    <div class="shape shape-two"></div>
+
+    <!-- HEADER -->
+
+    <header class="top-bar">
+
+      <a class="logo" href="index.html">
+        <img src="LL57gwyn.png" alt="LL57 Logo">
+      </a>
+
+      <nav class="social-links" aria-label="Navigation">
+
+        <a href="index.html">
+          Hafan | Home
+        </a>
+
+        <a href="faqs.html">
+          LLE57: FAQs
+        </a>
+
+        <a
+          href="https://www.instagram.com/_ll57_/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+
+        <a href="mailto:ll57bangor@gmail.com">
+          Ebost | Email
+        </a>
+
+      </nav>
+
+    </header>
+
+<!-- GIG -->
+
+<section class="gig-hero">
+
+  <div class="gig-poster-column">
+
+    <img
+      class="gig-poster"
+      src="POSTER.jpeg"
+      alt="Poster for LL57 Gig 001"
+    >
+
+  </div>
+
+
+  <div class="gig-info">
+
+    <p class="gig-label">
+      LLE57.001
+    </p>
+
+    <h1>
+      Georgia Ruth + Emyr Dance
+    </h1>
+
+    <p class="gig-date">
+      NOS WENER | FRIDAY 18.09.26 · 7:00PM
+    </p>
+
+    <p class="gig-description">
+      Gig cudd cyntaf yng nghyfres LLE57 — ymunwch a ni rhywle ar stryd fawr bangor.
+      Mae'r lleoliad yn gyfrinach... am rwan.
+    </p>
+
+    <p class="gig-description english">
+      The first secret gig in our LLE57 series — join us somewhere on Bangor high street.
+    </p>
+
+    <div class="gig-buttons">
+
+  <a
+    class="ticket-button"
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    TOCYNNAU | TICKETS →
+  </a>
+
+  <a
+    class="where-button"
+    href="#where"
+  >
+    LLE??? ↓
+  </a>
+
+</div>
+
+  </div>
+
+</section>
+
+    <!-- MAP -->
+
+    <section class="where-section" id="where">
+
+      <div class="where-heading">
+
+        <h2>
+          LLE???
+        </h2>
+
+        <p>
+          Mae'r cylch yn cau...<br>
+          The circle is closing...
+        </p>
+
+      </div>
+
+
+      <div class="map-frame">
+
+        <div
+          id="map"
+          aria-label="Map showing the approximate area of the secret LL57 gig"
+        ></div>
+
+      </div>
+
+
+      <div class="map-status">
+
+  <div class="status-block">
+
+    <span class="status-label">
+      Tan y gig | Until the gig
+    </span>
+
+    <span class="status-value" id="countdown">
+      —
+    </span>
+
+  </div>
+
+</div>
+
+
+<div class="map-explanation">
+
+  <p>
+    Bydd yr ardal ar y map yn culhau wrth i ni agosáu at y gig.
+    Sgenti docyn? Fydden ni'n ebostio'r lleoliad draw diwrnod cyn y gig.
+  </p>
+
+  <p>
+    The area on the map will narrow as we get closer to the gig.
+    The exact location will be revealed to ticket holders
+    by email before the night.
+  </p>
+
+  <p class="map-final-line">
+    Welwn ni chi yna?
+  </p>
+
+</div>
+
+    </section>
+
+
+    <!-- MAILING LIST -->
+
+    <section class="mailing-section">
+
+      <h2>
+        Paid â methu'r nesaf.
+      </h2>
+
+      <form
+        class="signup"
+        action="https://formspree.io/f/xaqrrwzo"
+        method="POST"
+      >
+
+        <h3>
+          RHESTR GYSWLLT LL57 MAILING LIST
+        </h3>
+
+        <p>
+          Paid â methu allan. Join the list to stay in the loop.
+        </p>
+
+        <div class="form-group">
+
+          <label for="name">
+            ENW | NAME
+          </label>
+
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="ENW | NAME"
+            autocomplete="name"
+            required
+          />
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="email">
+            EBOST | EMAIL
+          </label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="EBOST | EMAIL"
+            autocomplete="email"
+            required
+          />
+
+        </div>
+
+
+        <button
+          class="submit-button"
+          type="submit"
+        >
+          Cofrestru | Register
+        </button>
+
+        <p class="privacy-note">
+          Nawni ddim pestro! We'll only use your details to send
+          updates about LL57. You can unsubscribe at any time.
+        </p>
+
+      </form>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="bottom-bar">
+
+      <span>
+        LL57: Llwyfannu Cerddoriaeth yn Lleol |
+        A Local Platform for Live Music
+      </span>
+
+      <span>
+        © <span id="year"></span> LL57
+      </span>
+
+    </footer>
+
+  </main>
+
+
+  <!-- LEAFLET -->
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+  <script>
+
+    /* ==========================================================
+       GIG SETTINGS
+
+       IMPORTANT:
+       These must ONLY be public clue coordinates.
+       Do NOT put the actual venue coordinates anywhere here.
+       ========================================================== */
+
+    /* ==========================================================
+       DYNAMIC MAP SHAPE
+
+       IMPORTANT:
+       clueLat / clueLng are PUBLIC CLUE coordinates only.
+       Do NOT use the actual venue coordinates here.
+       ========================================================== */
+
+    const shrinkStart =
+      new Date("2026-09-02T00:00:00");
+
+    const gigDate =
+      new Date("2026-09-18T19:00:00");
+
+    /*
+      PUBLIC CLUE POINT ONLY.
+      This is deliberately not the actual venue location.
+    */
+    const clueLat = 53.227;
+    const clueLng = -4.129;
+
+    const now = new Date();
+
+    const totalTime = gigDate - shrinkStart;
+    const timePassed = now - shrinkStart;
+
+    let progress = timePassed / totalTime;
+    progress = Math.max(0, Math.min(1, progress));
+
+    /*
+      Ease-in curve:
+      stays broader at first and closes faster
+      during the final few days.
+    */
+    const easedProgress = progress * progress;
+
+
+    /* ==========================================================
+       CUSTOM LL57 MAP SHAPE
+
+       Approximation of the hand-drawn orange area you supplied.
+       These points are OFFSETS from the public clue point, not
+       venue coordinates.
+       ========================================================== */
+
+    const originalShape = [
+      [-0.0085, -0.0145],
+      [-0.0060, -0.0180],
+      [-0.0015, -0.0185],
+      [ 0.0030, -0.0165],
+      [ 0.0065, -0.0135],
+      [ 0.0095, -0.0100],
+      [ 0.0125, -0.0065],
+      [ 0.0150, -0.0020],
+      [ 0.0165,  0.0030],
+      [ 0.0170,  0.0085],
+      [ 0.0160,  0.0140],
+      [ 0.0145,  0.0200],
+      [ 0.0120,  0.0240],
+      [ 0.0090,  0.0215],
+      [ 0.0055,  0.0180],
+      [ 0.0025,  0.0145],
+      [-0.0010,  0.0110],
+      [-0.0045,  0.0070],
+      [-0.0070,  0.0025],
+      [-0.0090, -0.0020],
+      [-0.0100, -0.0075],
+      [-0.0095, -0.0115]
+    ];
+
+    /*
+      The same irregular shape shrinks toward the public clue point.
+      It ends at 30% of its starting size.
+    */
+    const startScale = 1;
+    const endScale = 0.30;
+
+    const currentScale =
+      startScale -
+      ((startScale - endScale) * easedProgress);
+
+    const currentShape = originalShape.map(
+      ([latOffset, lngOffset]) => [
+        clueLat + (latOffset * currentScale),
+        clueLng + (lngOffset * currentScale)
+      ]
+    );
+
+
+/* CREATE MAP */
+
+const map = L.map("map", {
+  scrollWheelZoom: false,
+  center: [clueLat, clueLng],
+  zoom: 13
+});
+
+L.tileLayer(
+  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors"
+  }
+).addTo(map);
+
+const clueShape = L.polygon(
+  currentShape,
+  {
+    color: "#e6401f",
+    weight: 5,
+    fillColor: "#e6401f",
+    fillOpacity: 0.20,
+    lineJoin: "round"
+  }
+).addTo(map);
+
+map.fitBounds(
+  clueShape.getBounds(),
+  {
+    padding: [35, 35]
+  }
+);
+
+/* Make sure Leaflet knows the map size */
+setTimeout(() => {
+  map.invalidateSize();
+
+  map.fitBounds(
+    clueShape.getBounds(),
+    {
+      padding: [35, 35]
+    }
+  );
+}, 300);
+
+
+    /* COUNTDOWN */
+
+    function updateCountdown() {
+
+      const currentTime = new Date();
+
+      const difference =
+        gigDate - currentTime;
+
+
+      if (difference <= 0) {
+
+        document.querySelector("#countdown").textContent =
+          "HENO | TONIGHT";
+
+        return;
+      }
+
+
+      const days =
+        Math.floor(
+          difference /
+          (1000 * 60 * 60 * 24)
+        );
+
+
+      const hours =
+        Math.floor(
+          (difference /
+          (1000 * 60 * 60)) % 24
+        );
+
+
+      if (days > 0) {
+
+        document.querySelector("#countdown").textContent =
+          days + " DIWRNOD | " +
+          days + (days === 1 ? " DAY" : " DAYS");
+
+      } else {
+
+        document.querySelector("#countdown").textContent =
+          hours + " AWR | " +
+          hours + (hours === 1 ? " HOUR" : " HOURS");
+
+      }
+
+    }
+
+
+    updateCountdown();
+
+    setInterval(updateCountdown, 60000);
+
+
+    /* YEAR */
+
+    document.querySelector("#year").textContent =
+      new Date().getFullYear();
+
+  </script>
+
+</body>
+</html>
