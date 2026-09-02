@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="cy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Cwestiynau | FAQs — LL57</title>
+
+  <style>
+    :root {
+      --orange: #e6401f;
+      --cream: #fff8f2;
+      --dark: #171717;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--cream);
+
+      background:
+        radial-gradient(
+          circle at top left,
+          #ef593a 0%,
+          #e6401f 30%,
+          #a92812 70%,
+          #541006 100%
+        );
+
+      background-attachment: fixed;
+    }
+
+    .page {
+      width: min(100% - 40px, 850px);
+      margin: 0 auto;
+      padding: 35px 0 80px;
+    }
+
+    /* HEADER */
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 90px;
+    }
+
+    .logo img {
+      width: 120px;
+      height: auto;
+      display: block;
+    }
+
+    nav {
+  margin-left: auto;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+    nav a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .language-divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 25px 0;
+}
+
+    /* TITLE */
+
+    .intro {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+    }
+
+    .intro p {
+      margin: 24px auto 0;
+      max-width: 600px;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* FAQs */
+
+    .faq-list {
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    details {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    summary {
+      position: relative;
+      padding: 28px 50px 28px 0;
+      cursor: pointer;
+      list-style: none;
+
+      font-size: clamp(1.25rem, 3vw, 1.6rem);
+      line-height: 1.2;
+      font-weight: bold;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 32px;
+      font-weight: normal;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    .answer {
+      padding: 0 50px 30px 0;
+      max-width: 720px;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .answer p {
+      margin: 0 0 18px;
+    }
+
+    .answer p:last-child {
+      margin-bottom: 0;
+    }
+
+    .answer a {
+      color: var(--cream);
+      font-weight: bold;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .small-note {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 80px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.6;
+      opacity: 0.85;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+      .page {
+        width: min(100% - 30px, 850px);
+        padding-top: 25px;
+      }
+
+      header {
+        align-items: flex-start;
+        margin-bottom: 65px;
+      }
+
+      .logo img {
+        width: 95px;
+      }
+
+      nav {
+        gap: 12px 18px;
+      }
+
+      nav a {
+        font-size: 12px;
+      }
+
+      .intro {
+        margin-bottom: 45px;
+      }
+
+      .answer {
+        padding-right: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header>
+
+      <a class="logo" href="index.html">
+        <img src="LL57gwyn.png" alt="LL57">
+      </a>
+
+      <nav>
+        <a href="index.html">Hafan</a>
+
+        <a
+          href="https://www.instagram.com/_ll57_/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+
+        <a href="mailto:ll57bangor@gmail.com">
+          Ebost
+        </a>
+      </nav>
+
+    </header>
+
+
+    <main>
+
+      <section class="intro">
+
+        <h1>Cwestiynau | FAQs </h1>
+
+        <p>
+          Popeth ‘da chi angen ei wybod am LL57.
+        </p>
+
+      </section>
+
+
+      <section class="faq-list">
+
+
+        <details>
+
+          <summary>Be ydi LL57? | What is LLE57? </summary>
+
+          <div class="answer">
+
+            <p>
+              Cyfres newydd o gigs cudd, wedi’i threfnu gan hyrwyddwyr
+              lleol, LL57, yn ardal côd post LL57 (yn amlwg).
+            </p>
+
+            <div class="language-divider"></div>
+            
+            <p>
+              A new series by promoters LL57, presenting “secret gigs” somewhere in the postcode LL57 (obviously!)
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>Be ydi gig cudd? | What is a secret gig?</summary>
+
+          <div class="answer">
+
+            <p>
+              Gig gyda lleoliad cyfrinachol.*
+            </p>
+
+            <p>
+              Bydd ein gigs yn cael eu cyhoeddi gyda dyddiad,
+              artistiaid ac amser yn unig, a chaiff yr union leoliad
+              ei ddatgelu yn nes at y gig.
+            </p>
+
+            <p class="small-note">
+              *Bydd ardal gyffredinol y gig yn cael ei datgelu gyda’r
+              cyhoeddiad er mwyn gwneud cynlluniau teithio’n haws
+              (gan bod Uber heb gyrraedd LL57 eto!).
+            </p>
+
+            <div class="language-divider"></div>
+
+            <p>
+             Gigs where the location is secret*
+            </p>
+
+            <p>
+              Our gigs will be announced with the date, time and artists only, the exact location will be disclosed later on.
+            </p>
+
+            <p class="small-note">
+              *The general area of the event will be given alongside the announcement, to make travel plans easier (until Ubers arrive at LL57!).
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>Be alla i ddisgwyl? | What can I expect?</summary>
+
+          <div class="answer">
+
+            <p>
+              Bydd pob gig yn unigryw, mewn lleoliadau annisgwyl - ella bydd rhai yn gyfarwydd i chi, ond ddim o reidrwydd fel lleoliad cerddoriaeth.
+
+            <div class="language-divider"></div>
+
+            <p>
+              Every gig will be unique, in unexpected locations - some will be familiar to you, but not as gig venues.
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>Ydi’r gigs yma ar fy nghyfer i?</summary>
+
+          <div class="answer">
+
+            <p>
+              Ma croeso i bawb yng gigs LL57.
+            </p>
+
+            <p>
+              Os ‘da chi’n ffans o gerddoriaeth, perfformiadau intimate,
+              a chyfle i gael gwrando’n iawn, dyma’r digwyddiad i chi.
+            </p>
+
+            <div class="language-divider"></div>
+
+            <p>
+              Everyone is welcomed at a LLE57 gig.
+            </p>
+
+            <p>
+              If you’re a fan of music, intimate performances, a chance to properly listen, this is the event for you.
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>Lle fydd sioeau LL57? | Where do you host these shows?</summary>
+
+          <div class="answer">
+
+            <p>
+              Yn dechnegol, gall unrhyw le yn yr ardal fod yn lleoliad
+              i un o’n gigs. Hen adeiladau, cestyll, lan môr, neu hyd yn
+              oed ardd gefn.
+            </p>
+
+            <p>
+              Rhywle diddorol ‘di dod i’r meddwl fysa’n dda ar gyfer gig?
+              Gadwch ni wybod —
+              <a href="mailto:ll57bangor@gmail.com">
+                ebostiwch ni ar ll57bangor@gmail.com
+              </a>.
+            </p>
+
+            <div class="language-divider"></div>
+
+            <p>
+              Technically, anywhere in the area could be a location for one of our gigs. Castles, chapels, the beach, even a back garden.
+            </p>
+
+            <p>
+              Anywhere interesting pop into your mind? Let us know, we might hold an event there -
+              <a href="mailto:ll57bangor@gmail.com">
+                email us at ll57bangor@gmail.com
+              </a>.
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>Sut fydda i’n gwbod lle i fynd? | How will I know where to go?</summary>
+
+          <div class="answer">
+
+            <p>
+              Ar ôl prynu tocyn, bydd ebost yn eich cyrraedd yn
+              datgelu’r lleoliad rai dyddiau cyn y digwyddiad.
+            </p>
+
+            <p>
+              Wrth reswm, os oes unrhyw gwestiynau hygyrchedd neu
+              gynlluniau teithio’n dibynnu ar leoliad y digwyddiad,
+              mae croeso i chi ein
+              <a href="mailto:ll57bangor@gmail.com">ebostio unrhyw bryd</a>
+              — ‘da ni’n trystio chi i gadw’r gyfrinach.
+            </p>
+
+            <div class="language-divider"></div>
+
+            <p>
+              After buying a ticket, you will receive an email disclosing the location a few days in advance. 
+            </p>
+
+            <p>
+               If you have any accessibility questions or concerns, or travel plans
+  that depend on the location, you're welcome to
+              <a href="mailto:ll57bangor@gmail.com">email us</a>
+              and ask for more info - we trust you to keep the secret.
+            </p>
+
+          </div>
+
+        </details>
+
+
+      </section>
+
+    </main>
+
+
+    <footer>
+      LL57: Llwyfannu Cerddoriaeth yn Lleol |
+      A Local Platform for Live Music
+      <br>
+      © <span id="year"></span> LL57
+    </footer>
+
+  </div>
+
+
+  <script>
+    document.querySelector("#year").textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>
