@@ -336,7 +336,9 @@
 .gig-page .gig-poster {
   display: block;
   width: 85%;
+  max-width: 360px;
   height: auto;
+  margin: 0 auto;
 }
 
 .gig-info {
@@ -491,7 +493,7 @@
 .map-gate {
   position: absolute;
   z-index: 1000;
-  inset: 0;
+  inset: 20px;
 
   display: flex;
   align-items: center;
@@ -499,13 +501,13 @@
 
   padding: 1.5rem;
 
-  background: rgba(0, 0, 0, 0.20);
-  backdrop-filter: blur(2px);
+  background: transparent;
+  backdrop-filter: none;
 }
 
 .map-gate-card {
-  width: min(100%, 430px);
-  padding: 2rem;
+  width: min(100%, 390px);
+  padding: 0.9rem 1.4rem;
 
   border: 1px solid rgba(255,255,255,0.55);
   border-radius: 1.5rem;
@@ -514,8 +516,7 @@
   color: var(--cream);
 
   text-align: center;
-
-  box-shadow: 0 15px 45px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .gate-lock {
@@ -567,6 +568,32 @@
 
 .map-gate-card input::placeholder {
   color: rgba(255,255,255,0.7);
+}
+
+.map-gate-label {
+  margin: 0 0 0.35rem;
+}
+
+.map-gate-card h2 {
+  margin: 0 0 0.5rem;
+}
+
+.map-gate-card > p {
+  margin: 0.4rem 0;
+}
+
+.map-gate-card input {
+  margin-top: 0.5rem;
+  padding: 0.8rem 1.2rem;
+}
+
+.reveal-submit {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+}
+
+.gate-lock {
+  margin-bottom: 0.4rem;
 }
 
 .reveal-submit {
@@ -1229,4 +1256,182 @@
   background: var(--orange);
   margin: 0.4rem auto;
   opacity: 0.6;
+}
+
+/* =========================
+   MOBILE POLISH
+   ========================= */
+
+@media (max-width: 700px) {
+
+  .page {
+    padding: 0.75rem;
+  }
+
+  .top-bar {
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .logo {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+  }
+
+  .social-links {
+    max-width: 230px;
+    gap: 0.35rem;
+    padding-bottom: 0.6rem;
+    font-size: 0.62rem;
+    line-height: 1.2;
+  }
+
+  .social-links a {
+    padding: 0.35rem 0.5rem;
+  }
+
+  /* HOME */
+
+  .home-page .gig-hero {
+    width: 100%;
+    margin: 2rem auto 4rem;
+  }
+
+  .home-page .gig-poster {
+    width: min(100%, 420px);
+  }
+
+  .gig-intro-title {
+    font-size: 2rem;
+  }
+
+  .gig-link-button {
+    min-width: 0;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* GIG PAGE */
+
+  .gig-page .gig-hero {
+    display: block;
+    width: 100%;
+    margin: 2rem auto 4rem;
+  }
+
+  .gig-page .gig-poster {
+    width: min(100%, 340px);
+    margin: 0 auto 2rem;
+  }
+
+  .gig-info {
+    padding: 0;
+    text-align: center;
+  }
+
+  .gig-info h1 {
+    font-size: 2.4rem;
+  }
+
+  .gig-buttons {
+    align-items: center;
+  }
+
+  /* MAP */
+
+  .where-section {
+    width: 100%;
+    margin-bottom: 4rem;
+  }
+
+  .where-heading h2 {
+    font-size: 3rem;
+  }
+
+  #map {
+    height: 430px;
+  }
+
+  .map-frame.revealed #map {
+    height: 400px;
+  }
+
+  .map-gate {
+    padding: 0.75rem;
+  }
+
+  .map-gate-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 1.25rem;
+  }
+
+  .map-gate-card h2 {
+    font-size: 2rem;
+  }
+
+  .venue-popup {
+    width: 260px;
+    grid-template-columns: 90px 1fr;
+    gap: 10px;
+  }
+
+  .venue-popup-image {
+    width: 90px;
+    height: 120px;
+  }
+
+  /* FAQ */
+
+  .intro h1 {
+    font-size: 2.6rem;
+  }
+
+  summary {
+    padding-right: 35px;
+    font-size: 1.1rem;
+  }
+
+  .answer {
+    padding-right: 0;
+    font-size: 0.95rem;
+  }
+
+  /* MAILING LIST */
+
+  .mailing-section {
+    width: 100%;
+    margin-bottom: 4rem;
+  }
+
+  .mailing-section > h2 {
+    font-size: 2.6rem;
+  }
+
+  .signup {
+    padding: 1.25rem;
+  }
+
+  /* FOOTER */
+
+  .bottom-bar {
+    gap: 0.5rem;
+    font-size: 0.65rem;
+  }
+}
+
+/* FINAL GIG POSTER SIZE */
+
+.gig-page .gig-hero .gig-poster {
+  width: 260px;
+  max-width: 260px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.map-gate-card > p span {
+  font-size: 0.75em;
+  opacity: 0.8;
+  font-weight: 400;
 }
