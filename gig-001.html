@@ -11,548 +11,17 @@
     content="LL57 Gig 001 — secret location, live music, tickets and event information."
   />
 
+  <link rel="stylesheet" href="style.css">
+
   <!-- LEAFLET MAP -->
   <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
 />
-
-  <style>
-    :root {
-      --orange: #e6401f;
-      --cream: #fff8f2;
-      --dark: #171717;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: var(--orange);
-      color: var(--cream);
-    }
-
-    a {
-      color: inherit;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    .page {
-      position: relative;
-      min-height: 100vh;
-      overflow: hidden;
-      padding: 2rem;
-      isolation: isolate;
-    }
-
-    /* BACKGROUND SHAPES */
-
-    .shape {
-      position: fixed;
-      z-index: -1;
-      background: rgba(255, 255, 255, 0.08);
-      pointer-events: none;
-      filter: blur(1px);
-    }
-
-    .shape-one {
-      width: 360px;
-      height: 360px;
-      top: -160px;
-      left: -120px;
-      border-radius:
-        42% 58% 67% 33% /
-        35% 47% 53% 65%;
-      animation: float-one 10s ease-in-out infinite alternate;
-    }
-
-    .shape-two {
-      width: 500px;
-      height: 500px;
-      right: -220px;
-      bottom: -240px;
-      border-radius:
-        61% 39% 34% 66% /
-        48% 62% 38% 52%;
-      animation: float-two 13s ease-in-out infinite alternate;
-    }
-
-    /* HEADER */
-
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .logo {
-      display: flex;
-      width: 160px;
-      height: 160px;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid rgba(255, 255, 255, 0.65);
-      border-radius: 50%;
-      text-decoration: none;
-    }
-
-    .logo img {
-      width: 120%;
-      height: 120%;
-      object-fit: contain;
-    }
-
-    .social-links {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.45);
-
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .social-links a {
-      text-decoration: none;
-    }
-
-    .social-links a:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.3rem;
-    }
-
-    /* GIG */
-
-.gig-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-  align-items: center;
-  gap: clamp(2.5rem, 7vw, 7rem);
-
-  width: min(100%, 1100px);
-  margin: 4rem auto 7rem;
-}
-
-.gig-poster {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.gig-info {
-  text-align: left;
-}
-
-.gig-label {
-  margin: 0 0 1rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  opacity: 0.8;
-}
-
-.gig-info h1 {
-  margin: 0 0 1rem;
-
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-}
-
-.gig-date {
-  margin: 0 0 2rem;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.gig-description {
-  max-width: 450px;
-  margin: 0 0 1rem;
-
-  font-size: 1rem;
-  line-height: 1.55;
-}
-
-.gig-description.english {
-  margin-bottom: 2rem;
-  opacity: 0.8;
-}
-
-.ticket-button {
-  display: inline-block;
-  padding: 1rem 1.8rem;
-
-  border: 2px solid var(--cream);
-  border-radius: 999px;
-
-  background: var(--cream);
-  color: var(--orange);
-
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.ticket-button:hover {
-  transform: translateY(-3px);
-  background: transparent;
-  color: var(--cream);
-}
-
-.gig-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.7rem;
-}
-
-.where-button {
-  display: inline-block;
-  padding: 1.2rem 2.2rem;
-
-  border: 2px solid var(--cream);
-  border-radius: 999px;
-
-  background: var(--cream);
-  color: var(--orange);
-
-  text-decoration: none;
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.where-button:hover {
-  transform: translateY(-3px);
-  background: transparent;
-  color: var(--cream);
-}
-
-    /* MAP */
-
-    .where-section {
-      width: min(100%, 1100px);
-      margin: 0 auto 7rem;
-    }
-
-    .where-heading {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .where-heading h2 {
-      margin: 0;
-      font-size: clamp(3rem, 9vw, 7rem);
-      line-height: 0.9;
-      letter-spacing: -0.06em;
-      text-transform: uppercase;
-    }
-
-    .where-heading p {
-      margin: 1rem auto 0;
-      font-size: 1.1rem;
-      line-height: 1.5;
-    }
-
-    .map-frame {
-      overflow: hidden;
-      border: 2px solid var(--cream);
-      border-radius: 1.5rem;
-      background: var(--cream);
-    }
-
-    #map {
-      width: 100%;
-      height: 600px;
-      background: #ddd;
-    }
-
-    .leaflet-control-attribution {
-      font-size: 9px !important;
-    }
-
-    /* Make the map quieter / less detailed visually */
-#map .leaflet-tile-pane {
-  filter:
-    grayscale(100%)
-    contrast(75%)
-    brightness(115%)
-    opacity(65%);
-}
-
-/* Keep our orange shape full colour */
-#map .leaflet-overlay-pane {
-  filter: none;
-}
-
-    .map-status {
-  margin-top: 1rem;
-  overflow: hidden;
-
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 1.5rem;
-
-  background: rgba(255,255,255,0.08);
-  text-align: center;
-}
-
-    .status-block {
-      padding: 2rem;
-      background: rgba(255,255,255,0.08);
-    }
-
-    .status-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    .status-value {
-      display: block;
-      font-size: clamp(1.7rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.05em;
-    }
-
-    .map-explanation {
-  max-width: 650px;
-  margin: 3rem auto 0;
-  text-align: center;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.map-explanation p {
-  margin: 0 0 1.2rem;
-}
-
-.map-final-line {
-  margin-top: 2rem !important;
-  font-size: 1.3rem;
-  font-weight: 800;
-}
-
-    /* MAILING LIST */
-
-    .mailing-section {
-      width: min(100%, 900px);
-      margin: 0 auto 7rem;
-      text-align: center;
-    }
-
-    .mailing-section > h2 {
-      margin: 0 0 2rem;
-      font-size: clamp(3rem, 7vw, 5rem);
-      line-height: 0.9;
-      letter-spacing: -0.06em;
-      text-transform: uppercase;
-    }
-
-    .signup {
-      padding: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      border-radius: 1.5rem;
-      background: rgba(255, 255, 255, 0.09);
-      backdrop-filter: blur(8px);
-    }
-
-    .signup h3 {
-      margin: 0 0 0.75rem;
-      font-size: 1.8rem;
-      letter-spacing: -0.04em;
-    }
-
-    .signup p {
-      margin: 0 0 1.5rem;
-      line-height: 1.5;
-    }
-
-    .form-group {
-      margin-bottom: 0.8rem;
-    }
-
-    label {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-    }
-
-    input {
-      width: 100%;
-      padding: 1rem 1.1rem;
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      border-radius: 999px;
-      outline: none;
-      background: rgba(255, 255, 255, 0.12);
-      color: white;
-    }
-
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.72);
-    }
-
-    input:focus {
-      border-color: white;
-      background: rgba(255, 255, 255, 0.18);
-    }
-
-    .submit-button {
-      width: 100%;
-      margin-top: 0.3rem;
-      padding: 1rem 1.25rem;
-      border: 0;
-      border-radius: 999px;
-      background: var(--cream);
-      color: var(--dark);
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .submit-button:hover {
-      transform: translateY(-2px);
-      background: white;
-    }
-
-    .privacy-note {
-      margin-top: 1rem !important;
-      margin-bottom: 0 !important;
-      font-size: 0.75rem;
-      opacity: 0.75;
-    }
-
-    /* FOOTER */
-
-    .bottom-bar {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.35);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    @keyframes float-one {
-      from {
-        transform: translate(0, 0);
-      }
-
-      to {
-        transform: translate(90px, 70px);
-      }
-    }
-
-    @keyframes float-two {
-      from {
-        transform: translate(0, 0);
-      }
-
-      to {
-        transform: translate(-80px, -50px);
-      }
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 850px) {
-      .page {
-        padding: 1.25rem;
-      }
-
-      .logo {
-        width: 88px;
-        height: 88px;
-      }
-
-      .social-links {
-        gap: 0.8rem;
-        font-size: 0.7rem;
-      }
-
-      .gig-hero {
-        margin-top: 2rem;
-      }
-
-      #map {
-        height: 470px;
-      }
-
-      .map-status {
-        grid-template-columns: 1fr;
-      }
-
-      .bottom-bar {
-        flex-direction: column;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .social-links {
-        max-width: 210px;
-      }
-
-      #map {
-        height: 400px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-      }
-    }
-  </style>
+ 
 </head>
 
-<body>
+<body class="gig-page">
 
   <main class="page">
 
@@ -563,15 +32,15 @@
 
     <header class="top-bar">
 
-      <a class="logo" href="index.html">
-        <img src="LL57gwyn.png" alt="LL57 Logo">
-      </a>
-
-      <nav class="social-links" aria-label="Navigation">
+      <nav class="social-links"" aria-label="Navigation">
 
         <a href="index.html">
           Hafan | Home
         </a>
+
+        <a class="active" href="gig-001.html">
+  LLE57.001
+</a>
 
         <a href="faqs.html">
           LLE57: FAQs
@@ -635,7 +104,7 @@
 
   <a
     class="ticket-button"
-    href="#"
+    href="https://www.seetickets.com/event/lle57-001/stryd-fawr-bangor-high-street/3700941?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAadibumWHaPyCbHJ_cCylhz7on14UJUUnYSBvQDnjyiSIC-qBx8t0LE_8dMQ_w_aem_0-OHhf6WPeC2KG6Ap3ARoA"
     target="_blank"
     rel="noopener noreferrer"
   >
@@ -676,11 +145,91 @@
       <div class="map-frame">
 
         <div
-          id="map"
-          aria-label="Map showing the approximate area of the secret LL57 gig"
-        ></div>
+  class="location-reveal-card"
+  id="location-reveal-card"
+  hidden
+>
 
-      </div>
+  <img
+    class="reveal-unlock"
+    src="UNLOCK.png"
+    alt=""
+  >
+
+  <p class="location-reveal-label">
+    LLEOLIAD WEDI'I DDATGELU | LOCATION UNLOCKED
+  </p>
+
+  <p class="location-reveal-subtext">
+    welwn ni chi yna...<br>
+    see you there...
+  </p>
+
+</div>
+
+  <div
+    id="map"
+    aria-label="Map showing the approximate area of the secret LL57 gig"
+  ></div>
+
+  <div class="map-gate" id="map-gate">
+
+    <div class="map-gate-card">
+
+      <p class="map-gate-label">
+        LLE57.001
+      </p>
+
+      <img
+  class="gate-lock"
+  src="LOCK.png"
+  alt=""
+>
+
+      <h2>
+        LLEOLIAD CUDD<br>
+        <span>SECRET LOCATION</span>
+      </h2>
+
+      <p>
+        Wedi prynu tocyn? Mae côd yn dy ebost i ddadgloi'r gyfrinach<br>
+        
+        Bought a ticket? Paste the code from your email into the box below.
+      </p>
+
+      <input
+        id="location-code"
+        type="text"
+        placeholder="COD | CODE"
+        autocomplete="off"
+      >
+
+      <button
+        class="reveal-submit"
+        id="reveal-submit"
+        type="button"
+      >
+        DATGELU | REVEAL →
+      </button>
+
+      <p
+        class="reveal-error"
+        id="reveal-error"
+      ></p>
+
+      <button
+        class="no-ticket-button"
+        id="no-ticket-button"
+        type="button"
+      >
+        DIM TOCYN? | I DON'T HAVE A TICKET →
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 
       <div class="map-status">
@@ -704,17 +253,16 @@
 
   <p>
     Bydd yr ardal ar y map yn culhau wrth i ni agosáu at y gig.
-    Sgenti docyn? Fydden ni'n ebostio'r lleoliad draw diwrnod cyn y gig.
+    </p>
+    Sgenti docyn? Mi fydd yna gôd wedi ei yrru i dy ebost. 
   </p>
 
-  <p>
+  <div class="reveal-language-divider"></div>
+
+    </p>
     The area on the map will narrow as we get closer to the gig.
-    The exact location will be revealed to ticket holders
-    by email before the night.
-  </p>
-
-  <p class="map-final-line">
-    Welwn ni chi yna?
+    </p>
+    Bought a ticket? Find a code in your emails to unlock the secret location.
   </p>
 
 </div>
@@ -921,10 +469,23 @@
 
 /* CREATE MAP */
 
+const mapBounds = L.latLngBounds(
+  [53.215, -4.155],
+  [53.240, -4.100]
+);
+
 const map = L.map("map", {
-  scrollWheelZoom: false,
   center: [clueLat, clueLng],
-  zoom: 13
+  zoom: 13,
+
+  maxBounds: mapBounds,
+  maxBoundsViscosity: 1.0,
+
+  scrollWheelZoom: true,
+  doubleClickZoom: true,
+  touchZoom: true,
+  boxZoom: true,
+  keyboard: true
 });
 
 L.tileLayer(
@@ -934,6 +495,8 @@ L.tileLayer(
     attribution: "&copy; OpenStreetMap contributors"
   }
 ).addTo(map);
+
+
 
 const clueShape = L.polygon(
   currentShape,
@@ -945,6 +508,20 @@ const clueShape = L.polygon(
     lineJoin: "round"
   }
 ).addTo(map);
+
+/* CLICK THE RED AREA TO REOPEN THE TICKET CODE BOX */
+
+clueShape.on("click", () => {
+
+  mapGate.style.display = "flex";
+
+  revealError.textContent = "";
+
+  setTimeout(() => {
+    locationCode.focus();
+  }, 100);
+
+});
 
 map.fitBounds(
   clueShape.getBounds(),
@@ -1025,6 +602,271 @@ setTimeout(() => {
 
     document.querySelector("#year").textContent =
       new Date().getFullYear();
+
+   /* MAP ACCESS */
+
+const mapGate =
+  document.querySelector("#map-gate");
+
+const noTicketButton =
+  document.querySelector("#no-ticket-button");
+
+const revealSubmit =
+  document.querySelector("#reveal-submit");
+
+const locationCode =
+  document.querySelector("#location-code");
+
+const revealError =
+  document.querySelector("#reveal-error");
+
+
+/* NO TICKET — SHOW MYSTERY MAP */
+
+noTicketButton.addEventListener("click", () => {
+
+  mapGate.style.display = "none";
+
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 100);
+
+});
+
+/* PRESS ENTER TO REVEAL */
+
+locationCode.addEventListener("keydown", (event) => {
+
+  if (event.key === "Enter") {
+    event.preventDefault();
+    revealSubmit.click();
+  }
+
+});
+
+
+/* CLEAR ERROR WHEN THEY START TYPING AGAIN */
+
+locationCode.addEventListener("input", () => {
+
+  revealError.textContent = "";
+
+});
+
+/* TICKET HOLDER */
+
+revealSubmit.addEventListener("click", () => {
+
+  const enteredCode =
+    locationCode.value.trim().toUpperCase();
+
+  /* WRONG CODE */
+  if (enteredCode !== "LLE57001") {
+
+    revealError.textContent =
+      "COD ANGHYWIR | INCORRECT CODE";
+
+    locationCode.animate(
+      [
+        { transform: "translateX(0)" },
+        { transform: "translateX(-9px)" },
+        { transform: "translateX(9px)" },
+        { transform: "translateX(-6px)" },
+        { transform: "translateX(6px)" },
+        { transform: "translateX(0)" }
+      ],
+      {
+        duration: 420,
+        easing: "ease"
+      }
+    );
+
+    return;
+  }
+
+
+  /* CORRECT CODE */
+
+  revealSubmit.disabled = true;
+
+mapGate.style.transition =
+  "opacity 1.8s ease";
+
+mapGate.style.opacity = "0";
+
+setTimeout(() => {
+
+  mapGate.style.display = "none";
+  mapGate.style.opacity = "1";
+
+      /* REMOVE THE MYSTERY SHAPE */
+
+      /* SHRINK + FADE THE MYSTERY SHAPE */
+
+const startShape = clueShape.getLatLngs()[0];
+
+const shapeCentre = clueShape.getBounds().getCenter();
+
+const shrinkDuration = 2000;
+const shrinkStartTime = performance.now();
+
+function shrinkClueShape(time) {
+
+  const progress = Math.min(
+    (time - shrinkStartTime) / shrinkDuration,
+    1
+  );
+
+  /* Smooth easing */
+  const eased =
+    1 - Math.pow(1 - progress, 3);
+
+  const shrinkingShape = startShape.map(point => {
+
+    const lat =
+      point.lat +
+      (shapeCentre.lat - point.lat) * eased;
+
+    const lng =
+      point.lng +
+      (shapeCentre.lng - point.lng) * eased;
+
+    return [lat, lng];
+
+  });
+
+  clueShape.setLatLngs(shrinkingShape);
+
+  clueShape.setStyle({
+    opacity: 1 - eased,
+    fillOpacity: 0.20 * (1 - eased)
+  });
+
+  if (progress < 1) {
+
+    requestAnimationFrame(shrinkClueShape);
+
+  } else {
+
+    clueShape.remove();
+
+  }
+
+}
+
+requestAnimationFrame(shrinkClueShape);
+
+
+      /* ============================================
+         ACTUAL VENUE
+         ============================================ */
+
+      const venueLat = 53.2263247;
+      const venueLng = -4.125466;
+
+      const venueAddress =
+        "Ambassador Hall Rear of, 236 High St, Bangor";
+
+
+     /* SHOW THE LOCATION UNLOCKED BANNER */
+
+const revealCard =
+  document.querySelector("#location-reveal-card");
+
+revealCard.hidden = false;
+
+document.querySelector(".map-frame")
+  .classList.add("revealed");
+
+/* Resize Leaflet once, after the new map height is applied */
+
+map.invalidateSize();
+
+/* Smoothly move to the venue */
+
+setTimeout(() => {
+
+  map.flyTo(
+    [venueLat + 0.00055, venueLng],
+    17,
+    {
+      animate: true,
+      duration: 2.5
+    }
+  );
+
+}, 800);
+
+      /* DROP THE MARKER + OPEN POPUP */
+
+      setTimeout(() => {
+
+        const venueIcon = L.divIcon({
+          className: "venue-marker-wrapper",
+
+          html: `
+            <div class="venue-marker">
+              <div class="venue-marker-pulse"></div>
+              <div class="venue-marker-dot"></div>
+            </div>
+          `,
+
+          iconSize: [44, 44],
+          iconAnchor: [22, 22]
+        });
+
+
+        const venueMarker = L.marker(
+          [venueLat, venueLng],
+          {
+            icon: venueIcon
+          }
+        ).addTo(map);
+
+
+        venueMarker
+          .bindPopup(`
+            <div class="venue-popup">
+
+              <img
+                src="VENUE.jpg"
+                alt="Blue Sky Cafe"
+                class="venue-popup-image"
+              >
+
+              <div class="venue-popup-info">
+
+                <h1>Blue Sky Cafe</h1>
+
+                <h2>LL57 1PA</h2>
+
+                <p>${venueAddress}</p>
+
+                <a
+                  class="venue-popup-maps"
+                  href="https://www.google.com/maps/search/?api=1&query=${venueLat},${venueLng}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  AGOR AR Y MAP | OPEN IN MAPS
+                </a>
+
+              </div>
+
+            </div>
+          `, {
+            maxWidth: 460,
+            autoPan: true,
+autoPanPaddingTopLeft: [30, 80],
+autoPanPaddingBottomRight: [30, 30]
+          })
+          .openPopup();
+
+      }, 1000);
+
+    }, 1000);
+
+});
 
   </script>
 
